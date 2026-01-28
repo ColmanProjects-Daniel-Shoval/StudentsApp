@@ -26,6 +26,9 @@ class StudentDetailsActivity : AppCompatActivity() {
             loadStudentDetails(studentId)
 
             findViewById<Button>(R.id.edit_button).setOnClickListener {
+                val intent = Intent(this, EditStudentActivity::class.java)
+                intent.putExtra("studentId", studentId)
+                startActivity(intent)
             }
         }
     }

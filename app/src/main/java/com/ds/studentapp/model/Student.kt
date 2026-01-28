@@ -5,5 +5,6 @@ data class Student(
     var name: String,
     var phone: String,
     var address: String,
-    var checked: Boolean = false
+    var checked: Boolean = false,
+    var image: Int
 )

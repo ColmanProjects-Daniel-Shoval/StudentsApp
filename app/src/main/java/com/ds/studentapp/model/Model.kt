@@ -1,17 +1,36 @@
 package com.ds.studentapp.model
 
+import com.ds.studentapp.R
+
 class Model private constructor() {
 
     private var students: MutableList<Student> = ArrayList()
 
+    val drawables = listOf(
+        R.drawable.sponge,
+        R.drawable.daniel,
+        R.drawable.star,
+        R.drawable.puff,
+        R.drawable.mrkrabs,
+        R.drawable.sandy
+    )
     init {
-        for (i in 0..20) {
+        val characters = listOf(
+            "SpongeBob SquarePants", "Patrick Star", "Squidward Tentacles",
+            "Mr. Krabs", "Sandy Cheeks", "Sheldon J. Plankton",
+            "Gary the Snail", "Mrs. Puff", "Pearl Krabs", "Larry the Lobster"
+        )
+
+        // Using the list size or a fixed number
+        for (i in 0 until characters.size) {
+            val randomImage = drawables.random()
             val student = Student(
-                name = "Name $i",
-                id = "Student ID: $i",
-                phone = "Phone $i",
-                address = "Address $i",
-                checked  = false
+                name = characters[i],
+                id = "SB-${100 + i}", // Custom ID format like SB-100, SB-101
+                phone = "02146158432$i",
+                address = "Bikiny Bottom Clam Street $i",
+                checked = i % 2 == 0,
+                image = randomImage
             )
             students.add(student)
         }
@@ -30,6 +49,10 @@ class Model private constructor() {
         students.add(student)
     }
 
+
+    fun getRandomDrawable(): Int {
+        return drawables.random()
+    }
     fun getStudents(): List<Student> {
         return students
     }
