@@ -2,10 +2,17 @@ package com.ds.studentapp
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.CheckBox
+import android.widget.ListView
+import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ds.studentapp.adapter.StudentsRecyclerAdapter
@@ -16,21 +23,25 @@ interface OnItemClickListener {
     fun onItemClick(position: Int)
     fun onItemClick(student: Student?)
 }
-class StudentListFragment : Fragment() {
+class StudentListView : AppCompatActivity() {
 
-    private var students: MutableList<Student>? = null
+    var students: MutableList<Student>? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view =  inflater.inflate(R.layout.fragment_student_list, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_student_list_view)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
         students = Model.shared.students
-        val recyclerView: RecyclerView = view.findViewById(R.id.students_list_activity_recycler_view)
+        val recyclerView: RecyclerView = findViewById(R.id.students_list_activity_recycler_view)
         recyclerView.setHasFixedSize(true)
 
-        val layoutManager = LinearLayoutManager(context)
+        val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
 
         val adapter = StudentsRecyclerAdapter(students)
@@ -46,7 +57,5 @@ class StudentListFragment : Fragment() {
         }
 
         recyclerView.adapter = adapter
-
-        return view
     }
 }
