@@ -5,44 +5,27 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ds.studentapp.OnItemClickListener
 import com.ds.studentapp.R
+import com.ds.studentapp.model.Model
 import com.ds.studentapp.model.Student
 
 class StudentViewHolder(
-    itemView: View,
-    listener: OnItemClickListener?
+    itemView: View
     ): RecyclerView.ViewHolder(itemView) {
+    private val name: TextView = itemView.findViewById(R.id.studentName)
+    private val id: TextView = itemView.findViewById(R.id.studentId)
+    private val checkBox: CheckBox = itemView.findViewById(R.id.studentCheck)
 
-        private var nameTextView: TextView? = null
-        private var idTextView: TextView? = null
-        private var checkBox: CheckBox? = null
-        private var student: Student? = null
+    fun bind(student: Student, onItemClickListener: StudentsRecyclerAdapter.OnItemClicked) {
+        name.text = student.name
+        id.text = student.id
+        checkBox.isChecked = student.checked
 
-        init {
-            nameTextView = itemView.findViewById(R.id.student_row_name_text_view)
-            idTextView = itemView.findViewById(R.id.student_row_id_text_view)
-            checkBox = itemView.findViewById(R.id.student_row_check_box)
-
-            checkBox?.apply {
-                setOnClickListener { view ->
-                    (tag as? Int)?.let { tag ->
-                        student?.isChecked = (view as? CheckBox)?.isChecked ?: false
-                    }
-                }
-            }
-
-            itemView.setOnClickListener {
-                listener?.onItemClick(adapterPosition)
-                listener?.onItemClick(student)
-            }
+        checkBox.setOnCheckedChangeListener { _, isChecked ->
+            student.checked = isChecked
         }
 
-        fun bind(student: Student?, position: Int) {
-            this.student = student
-            nameTextView?.text = student?.name
-            idTextView?.text = student?.id
-            checkBox?.apply {
-                isChecked = student?.isChecked ?: false
-                tag = position
-            }
+        itemView.setOnClickListener {
+            onItemClickListener.onItemClicked(student.id)
         }
+    }
     }
