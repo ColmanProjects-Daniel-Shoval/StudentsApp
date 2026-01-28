@@ -11,21 +11,21 @@ import com.ds.studentapp.model.Student
 class StudentViewHolder(
     itemView: View
     ): RecyclerView.ViewHolder(itemView) {
-    private val name: TextView = itemView.findViewById(R.id.studentName)
-    private val id: TextView = itemView.findViewById(R.id.studentId)
-    private val checkBox: CheckBox = itemView.findViewById(R.id.studentCheck)
+        private val name: TextView = itemView.findViewById(R.id.studentName)
+        private val id: TextView = itemView.findViewById(R.id.studentId)
+        private val checkBox: CheckBox = itemView.findViewById(R.id.studentCheck)
 
-    fun bind(student: Student, onItemClickListener: StudentsRecyclerAdapter.OnItemClicked) {
-        name.text = student.name
-        id.text = student.id
-        checkBox.isChecked = student.checked
+        fun bind(student: Student, onItemClickListener: StudentsRecyclerAdapter.OnItemClicked) {
+            name.text = student.name
+            id.text = student.id
+            checkBox.isChecked = student.checked
 
-        checkBox.setOnCheckedChangeListener { _, isChecked ->
-            student.checked = isChecked
+            checkBox.setOnCheckedChangeListener { _, isChecked ->
+                student.checked = isChecked
+            }
+
+            itemView.setOnClickListener {
+                onItemClickListener.onItemClicked(student.id)
+            }
         }
-
-        itemView.setOnClickListener {
-            onItemClickListener.onItemClicked(student.id)
-        }
-    }
     }

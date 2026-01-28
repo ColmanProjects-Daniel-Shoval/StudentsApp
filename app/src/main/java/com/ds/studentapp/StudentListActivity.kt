@@ -50,7 +50,9 @@ class StudentListActivity : AppCompatActivity() {
     }
     private fun createAdapter(): StudentsRecyclerAdapter {
         return StudentsRecyclerAdapter { studentId ->
-
+            val intent = Intent(this, StudentDetailsActivity::class.java)
+            intent.putExtra("studentId", studentId)
+            startActivity(intent)
         }
     }
 }
