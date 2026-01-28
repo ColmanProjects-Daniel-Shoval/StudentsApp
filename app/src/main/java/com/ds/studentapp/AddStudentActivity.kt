@@ -43,7 +43,8 @@ class AddStudentActivity : AppCompatActivity() {
             nameInput.text.toString(),
             phoneInput.text.toString(),
             addressInput.text.toString(),
-            checkBoxInput.isChecked
+            checkBoxInput.isChecked,
+            Model.getInstance().getRandomDrawable()
         )
 
         Model.getInstance().addStudent(newStudent)
